@@ -1,0 +1,292 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Object Detection</title>
+    <style>
+        body {
+            background-color: #d5e6ed; /* A light grey background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff; /* White background for the video container */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333333; /* Dark grey color for the header */
+            margin-bottom: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Live Object Detection</h1>
+        <img src="{% url 'video_feed' %}" alt="Video Feed">
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Object Detection</title>
+    <!-- Bootstrap CSS for Navbar and Carousel -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #2c2f33; /* Dark grey background */
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background-color: #004b6b; /* Deep blue color for navbar */
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            color: #004b6b; /* Matching deep blue color for the header */
+            margin-bottom: 20px;
+        }
+
+        .video-container {
+            display: inline-block;
+            background-color: #f8f9fa; /* Light grey background */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            padding: 0;
+            text-align: left;
+            max-width: 80%; /* Ensure the video container is smaller */
+        }
+
+        .video-heading {
+            background-color: #e2e6ea; /* Light background for heading */
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+            margin: 0;
+            color: #333333;
+        }
+
+        .video-heading h2 {
+            font-size: 18px; /* Smaller heading */
+            margin: 0;
+        }
+
+        .video-container img {
+            width: 100%;
+            border-radius: 0 0 10px 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .carousel-container {
+            background-color: #566573; /* Light grey background for carousel section */
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 60px; /* Ensure footer doesn't overlap */
+            text-align: center;
+        }
+
+        .carousel-heading {
+            background-color: #e2e6ea; /* Slightly lighter background */
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        .carousel-heading h2 {
+            font-size: 24px; /* Larger heading for carousel section */
+            margin: 0;
+        }
+
+        .carousel-item img {
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .carousel-caption {
+            background-color: rgba(0, 75, 107, 0.8);
+            border-radius: 10px;
+            padding: 10px 20px;
+        }
+
+        .carousel-caption h5,
+        .carousel-caption p {
+            color: #ffffff;
+        }
+
+        .carousel-thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Increased padding between thumbnails */
+            margin-top: 20px;
+        }
+
+        .carousel-thumbnails img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 10px;
+            border: 3px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .carousel-thumbnails img.active-thumbnail {
+            border-color: #004b6b; /* Highlight active thumbnail with deep blue border */
+        }
+
+        footer {
+            background-color: #004b6b;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            width: 100%;
+            margin-top: 40px; /* Add margin to avoid overlap */
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .carousel-thumbnails img {
+                width: 75px;
+                height: 75px;
+            }
+
+            .video-container {
+                max-width: 100%; /* Adjust video container for smaller screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar with Branding -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Real-Time Object Detection and Monitoring System</a>
+        </div>
+    </nav>
+
+    <!-- Container for Live Video Feed -->
+    <div class="container">
+        <div class="video-container">
+            <div class="video-heading">
+                <h2>Live Stream:</h2>
+            </div>
+            <img src="{% url 'video_feed' %}" alt="Video Feed">
+        </div>
+    </div>
+
+    <!-- Carousel Container -->
+    <div class="container carousel-container">
+        <div class="carousel-heading">
+            <h2>Detected Animals</h2>
+        </div>
+        <!-- Carousel to Display Detected Animals -->
+        <div id="detectedAnimalsCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for image in detected_images %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.animal_class.name }}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ image.animal_class.name }}</h5>
+                        <p>Detected at: {{ image.timestamp|date:"M. d, Y, P" }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#detectedAnimalsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#detectedAnimalsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!-- Thumbnails for Carousel -->
+        <div class="carousel-thumbnails">
+            {% for image in detected_images %}
+            <img src="{{ image.image.url }}" alt="{{ image.animal_class.name }}" class="{% if forloop.first %}active-thumbnail{% endif %}" data-bs-target="#detectedAnimalsCarousel" data-bs-slide-to="{{ forloop.counter0 }}">
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        © 2024 Real-Time Object Detection and Monitoring System
+    </footer>
+
+    <!-- Bootstrap JS for Carousel -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Add active class to the current thumbnail
+        document.querySelectorAll('.carousel-thumbnails img').forEach((thumbnail, index) => {
+            thumbnail.addEventListener('click', function () {
+                document.querySelector('.carousel-thumbnails img.active-thumbnail').classList.remove('active-thumbnail');
+                this.classList.add('active-thumbnail');
+            });
+
+            // Sync thumbnails with carousel
+            document.getElementById('detectedAnimalsCarousel').addEventListener('slide.bs.carousel', function (e) {
+                if (e.to === index) {
+                    document.querySelector('.carousel-thumbnails img.active-thumbnail').classList.remove('active-thumbnail');
+                    thumbnail.classList.add('active-thumbnail');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
