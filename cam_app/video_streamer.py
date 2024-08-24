@@ -8,7 +8,7 @@ import os
 from cam_app.models import AnimalClass, DetectedImage
 
 class VideoStreamer:
-    def __init__(self, source=1, confidence_threshold=0.7, save_interval=3):
+    def __init__(self, source=0, confidence_threshold=0.7, save_interval=3):
         self.cap = cv2.VideoCapture(source)
         self.lock = threading.Lock()
         self.frame = None

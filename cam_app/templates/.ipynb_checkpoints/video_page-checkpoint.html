@@ -1,48 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Object Detection</title>
-    <style>
-        body {
-            background-color: #d5e6ed; /* A light grey background color */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            text-align: center;
-            background-color: #ffffff; /* White background for the video container */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            color: #333333; /* Dark grey color for the header */
-            margin-bottom: 20px;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Live Object Detection</h1>
-        <img src="{% url 'video_feed' %}" alt="Video Feed">
-    </div>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -148,12 +103,24 @@
         .carousel-caption {
             background-color: rgba(0, 75, 107, 0.8);
             border-radius: 10px;
-            padding: 10px 20px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .carousel-caption .text-left {
+            text-align: left;
+        }
+
+        .carousel-caption .text-right {
+            text-align: right;
         }
 
         .carousel-caption h5,
         .carousel-caption p {
             color: #ffffff;
+            margin: 0;
         }
 
         .carousel-thumbnails {
@@ -207,10 +174,13 @@
 <body>
     <!-- Navbar with Branding -->
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Real-Time Object Detection and Monitoring System</a>
-        </div>
-    </nav>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <span style="display: block; font-size: 28px;">WildGaze</span>
+            <span style="display: block; font-size: 14px;">Real-Time Object Detection and Monitoring System</span>
+        </a>
+    </div>
+</nav>
 
     <!-- Container for Live Video Feed -->
     <div class="container">
@@ -230,12 +200,25 @@
         <!-- Carousel to Display Detected Animals -->
         <div id="detectedAnimalsCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                {% for image in detected_images %}
+                {% for item in images_with_data %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.animal_class.name }}">
+                    <img src="{{ item.image.image.url }}" class="d-block w-100" alt="{{ item.image.animal_class.name }}">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>{{ image.animal_class.name }}</h5>
-                        <p>Detected at: {{ image.timestamp|date:"M. d, Y, P" }}</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="text-left">
+                                <h5>{{ item.image.animal_class.name }}</h5>
+                                <p>Detected at: {{ item.image.timestamp|date:"M. d, Y, P" }}</p>
+                            </div>
+                            <div class="text-right">
+                                {% if item.environmental_data %}
+                                <p>Temperature: {{ item.environmental_data.data.temperature }}°C</p>
+                                <p>Humidity: {{ item.environmental_data.data.humidity }}%</p>
+                                <p>Pressure: {{ item.environmental_data.data.pressure }} hPa</p>
+                                {% else %}
+                                <p>No Environmental Data available</p>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
@@ -252,15 +235,15 @@
 
         <!-- Thumbnails for Carousel -->
         <div class="carousel-thumbnails">
-            {% for image in detected_images %}
-            <img src="{{ image.image.url }}" alt="{{ image.animal_class.name }}" class="{% if forloop.first %}active-thumbnail{% endif %}" data-bs-target="#detectedAnimalsCarousel" data-bs-slide-to="{{ forloop.counter0 }}">
+            {% for item in images_with_data %}
+            <img src="{{ item.image.image.url }}" alt="{{ item.image.animal_class.name }}" class="{% if forloop.first %}active-thumbnail{% endif %}" data-bs-target="#detectedAnimalsCarousel" data-bs-slide-to="{{ forloop.counter0 }}">
             {% endfor %}
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        © 2024 Real-Time Object Detection and Monitoring System
+        © 2024 WildGaze
     </footer>
 
     <!-- Bootstrap JS for Carousel -->
@@ -286,7 +269,3 @@
 </body>
 
 </html>
-
-
-
-
